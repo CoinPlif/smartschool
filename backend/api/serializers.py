@@ -20,4 +20,3 @@ class DishesInOrdersSerializers(serializers.ModelSerializer):
         model = DishesInOrders
         fields = "__all__"
 
-class
