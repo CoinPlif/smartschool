@@ -19,13 +19,13 @@ class DishTypes(models.Model):
 class Dishes(models.Model):
     dish_type = models.ForeignKey(DishTypes,
                                   on_delete=models.CASCADE,
-                                  verbose_name="Тип блюда (завтрак, обед или ужин)"),
+                                  verbose_name="Тип блюда (завтрак, обед или ужин)")
     dish_name = models.CharField(max_length=255,
-                                 verbose_name="Название блюда"),
+                                 verbose_name="Название блюда")
     dish_description = models.TextField(max_length=255,
-                                        verbose_name="Описание блюда"),
-    dish_calories = models.FloatField(verbose_name="Калорийность блюда"),
-    dish_price = models.FloatField(verbose_name="Цена блюда"),
+                                        verbose_name="Описание блюда")
+    dish_calories = models.FloatField(verbose_name="Калорийность блюда")
+    dish_price = models.FloatField(verbose_name="Цена блюда")
     valid_from_dttm = models.DateTimeField(verbose_name="Дата начала нахождения блюда в меню (datatime)")
     valid_to_dttm = models.DateTimeField(verbose_name="Дата конца нахождения блюда в меню (datatime)")
     SchoolWorkers_id = models.ForeignKey(SchoolWorkers,
