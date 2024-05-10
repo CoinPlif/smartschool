@@ -1,16 +1,21 @@
 from django.db import models
 
 
-from .constants import (LOGIN_LENGTH, PASSWORD_LENGTH)
+from .constants import (LOGIN_LENGTH, PASSWORD_LENGTH, CARD_LENGTH, CVV_LENGTH)
 
 
 class Cards(models.Model):
-    cards_number = models.IntegerField(max_length=LOGIN_LENGTH,
-                                       verbose_name="Номер банковской карты")
-    cards_cvv = models.IntegerField(max_length=LOGIN_LENGTH,
-                                    verbose_name="Логин администратора")
+    cards_number = models.CharField(max_length=CARD_LENGTH,
+                                    null=False,
+                                    verbose_name="Номер банковской карты")
+
+    cards_cvv = models.CharField(max_length=CVV_LENGTH,
+                                 null=False,
+                                 verbose_name="CVV карты")
+
     cards_expiry = models.CharField(max_length=LOGIN_LENGTH,
-                                    verbose_name="Логин администратора")
+                                    null=False,
+                                    verbose_name="Срок карты")
 
     class Meta:
         verbose_name = "Карты"
@@ -21,8 +26,13 @@ class Cards(models.Model):
 
 class Administrators(models.Model):
     administrators_login = models.CharField(max_length=LOGIN_LENGTH,
+                                            default="admin",
+                                            null=False,
                                             verbose_name="Логин администратора")
+
     administrators_password = models.CharField(max_length=PASSWORD_LENGTH,
+                                               default="admin",
+                                               null=False,
                                                verbose_name="Пароль администратора")
 
     class Meta:
@@ -34,14 +44,21 @@ class Administrators(models.Model):
 
 class Parents(models.Model):
     parents_login = models.CharField(max_length=LOGIN_LENGTH,
+                                     null=False,
                                      verbose_name="Логин родителя")
+
     parents_name = models.CharField(max_length=LOGIN_LENGTH,
+                                    null=False,
                                     verbose_name="Имя родителя")
+
     parents_password = models.CharField(max_length=PASSWORD_LENGTH,
+                                        null=False,
                                         verbose_name="Пароль родителя")
+
     administrators_id = models.ForeignKey(Administrators,
                                           on_delete=models.CASCADE,
                                           verbose_name="id администратора, заносившего пользователя")
+
     card_id = models.ForeignKey(Cards,
                                 on_delete=models.CASCADE,
                                 verbose_name="Номер карты родителя родителя")
@@ -56,6 +73,7 @@ class Parents(models.Model):
 class Children(models.Model):
     children_name = models.CharField(max_length=PASSWORD_LENGTH,
                                      verbose_name="Имя ребенка")
+
     parents_id = models.ForeignKey(Parents,
                                    on_delete=models.CASCADE)
 
@@ -68,9 +86,13 @@ class Children(models.Model):
 
 class SchoolWorkers(models.Model):
     schoolworkers_login = models.CharField(max_length=LOGIN_LENGTH,
+                                           null=False,
                                            verbose_name="Логин работника учреждения")
+
     schoolworkers_password = models.CharField(max_length=PASSWORD_LENGTH,
+                                              null=False,
                                               verbose_name="Пароль работника учреждения")
+
     administrators_id = models.ForeignKey(Administrators,
                                           on_delete=models.CASCADE,
                                           verbose_name="id администратора, заносившего пользователя")
