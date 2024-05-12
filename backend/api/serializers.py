@@ -36,13 +36,12 @@ class OrdersSerializers(serializers.ModelSerializer):
         print()
         print()
         orders_dishes = request.dishesinorders_set.values(
-            "dish_id",
-            "order_id"
+            "dishes_id",
+            "orders_id"
         )
         forms_dishes = []
         for orders_dish in orders_dishes:
-            form_dishes = {'id': orders_dish['dish_id'],
-                           'order_id': orders_dish['order_id'],
+            form_dishes = {'dishes_id': orders_dish['dishes_id']
                            }
             forms_dishes.append(form_dishes)
 

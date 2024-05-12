@@ -6,43 +6,43 @@ from users.models import (SchoolWorkers, Parents, Children)
 
 
 class DishTypes(models.Model):
-    dishtypes_name = models.CharField(max_length=LENGTH_NAME,
-                                      verbose_name="Прием пищи",
-                                      blank=False,
-                                      null=False,
-                                      default="Завтрак")
+    dishes_types_name = models.CharField(max_length=LENGTH_NAME,
+                                         verbose_name="Прием пищи",
+                                         blank=False,
+                                         null=False,
+                                         default="Завтрак")
 
     class Meta:
         verbose_name = "Тип блюда, когда он принимается (завтрак, обед или ужин)"
 
     def __str__(self):
-        return self.dishtypes_name
+        return self.dishes_types_name
 
 
 class Dishes(models.Model):
-    dish_type = models.ForeignKey(DishTypes,
-                                  default="Завтрак",
-                                  blank=False,
-                                  null=False,
-                                  on_delete=models.CASCADE,
-                                  verbose_name="Тип блюда (завтрак, обед или ужин)")
+    dishes_type = models.ForeignKey(DishTypes,
+                                    default="Завтрак",
+                                    blank=False,
+                                    null=False,
+                                    on_delete=models.CASCADE,
+                                    verbose_name="Тип блюда (завтрак, обед или ужин)")
 
-    dish_name = models.CharField(max_length=LENGTH_NAME,
-                                 blank=False,
-                                 null=False,
-                                 verbose_name="Название блюда")
+    dishes_name = models.CharField(max_length=LENGTH_NAME,
+                                   blank=False,
+                                   null=False,
+                                   verbose_name="Название блюда")
 
-    dish_description = models.TextField(max_length=LENGTH_DESCRIPTION,
-                                        verbose_name="Описание блюда")
+    dishes_description = models.TextField(max_length=LENGTH_DESCRIPTION,
+                                          verbose_name="Описание блюда")
 
-    dish_calories = models.FloatField(validators=[
+    dishes_calories = models.FloatField(validators=[
                                            MinValueValidator(MIN_NUMBER),
                                            MaxValueValidator(MAX_CALORIES)
                                       ],
                                       default=0,
                                       verbose_name="Калорийность блюда")
 
-    dish_price = models.FloatField(validators=[
+    dishes_price = models.FloatField(validators=[
                                            MinValueValidator(MIN_NUMBER),
                                            MaxValueValidator(MAX_PRICE)
                                    ],
@@ -66,7 +66,7 @@ class Dishes(models.Model):
         verbose_name = "Блюда"
 
     def __str__(self):
-        return self.dish_name
+        return self.dishes_name
 
 
 class Orders(models.Model):
@@ -105,14 +105,14 @@ class Orders(models.Model):
 
 
 class DishesInOrders(models.Model):
-    dish_id = models.ForeignKey(Dishes,
-                                on_delete=models.CASCADE)
+    dishes_id = models.ForeignKey(Dishes,
+                                  on_delete=models.CASCADE)
 
-    order_id = models.ForeignKey(Orders,
-                                 on_delete=models.CASCADE)
+    orders_id = models.ForeignKey(Orders,
+                                  on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"dish_id = {self.dish_id} order_id = {self.order_id}"
+        return f"{self.dishes_id} {self.orders_id}"
 
 
 class Reviews(models.Model):
