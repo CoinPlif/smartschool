@@ -101,7 +101,7 @@ class Orders(models.Model):
         verbose_name = "Orders"
 
     def __str__(self):
-        return f"orders_day_dt = {self.orders_day_dt} children_id = {self.children_id}"
+        return f"{self.orders_day_dt} {self.children_id}"
 
 
 class DishesInOrders(models.Model):
@@ -142,4 +142,4 @@ class Reviews(models.Model):
         verbose_name = "Reviews"
 
     def __str__(self):
-        return f"parent_id = {self.parent_id} dishes_id = {self.dishes_id}"
+        return f"{self.parent_id} {self.dishes_id}"

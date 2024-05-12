@@ -21,7 +21,7 @@ class Cards(models.Model):
         verbose_name = "Карты"
 
     def __str__(self):
-        return f"cards_number = {self.cards_number}"
+        return f"{self.cards_number}"
 
 
 class Administrators(models.Model):
@@ -39,7 +39,7 @@ class Administrators(models.Model):
         verbose_name = "Администратор"
 
     def __str__(self):
-        return f"administrators_login = {self.administrators_login}"
+        return f"{self.administrators_login}"
 
 
 class Parents(models.Model):
@@ -67,7 +67,7 @@ class Parents(models.Model):
         verbose_name = "Родители"
 
     def __str__(self):
-        return f"parents_login = {self.parents_login}"
+        return f"{self.parents_login}"
 
 
 class Children(models.Model):
@@ -81,7 +81,7 @@ class Children(models.Model):
         verbose_name = "Дети"
 
     def __str__(self):
-        return f"children_name = {self.children_name}"
+        return f"{self.children_name}"
 
 
 class SchoolWorkers(models.Model):
@@ -101,7 +101,7 @@ class SchoolWorkers(models.Model):
         verbose_name = "Работники школы"
 
     def __str__(self):
-        return f"schoolworkers_login = {self.schoolworkers_login}"
+        return f"{self.schoolworkers_login}"
 
 
 

@@ -5,19 +5,19 @@ from rest_framework.fields import (SerializerMethodField, IntegerField, ImageFie
 
 
 class SchoolWorkersSerializers(serializers.ModelSerializer):
-    id = IntegerField(write_only=True)
-
-    schoolworkers_login = CharField(min_length=8,
-                                    max_length=32,
-                                    allow_null=False,
-                                    trim_whitespace=True,
-                                    required=True)
-
-    schoolworkers_password = CharField(min_length=8,
-                                       max_length=32,
-                                       allow_null=False,
-                                       trim_whitespace=True,
-                                       required=True)
+    # id = IntegerField(write_only=True)
+    #
+    # schoolworkers_login = CharField(min_length=8,
+    #                                 max_length=32,
+    #                                 allow_null=False,
+    #                                 trim_whitespace=True,
+    #                                 required=True)
+    #
+    # schoolworkers_password = CharField(min_length=8,
+    #                                    max_length=32,
+    #                                    allow_null=False,
+    #                                    trim_whitespace=True,
+    #                                    required=True)
 
     class Meta:
         model = SchoolWorkers

@@ -22,7 +22,7 @@ class Payments(models.Model):
         verbose_name = "Платежи"
 
     def __str__(self):
-        return f"order_id = {self.order_id} parents_id = {self.parents_id} cards_id = {self.cards_id}"
+        return f"{self.order_id} {self.parents_id} {self.cards_id}"
 
 
 class Reports(models.Model):
@@ -43,5 +43,5 @@ class Reports(models.Model):
         verbose_name = "Репорты"
 
     def __str__(self):
-        return f"parents_id = {self.parents_id} reports_created_dttm = {self.reports_created_dttm}"
+        return f"{self.parents_id} {self.reports_created_dttm}"
 
