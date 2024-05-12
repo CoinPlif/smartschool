@@ -21,7 +21,6 @@ class DishTypes(models.Model):
 
 class Dishes(models.Model):
     dishes_type = models.ForeignKey(DishTypes,
-                                    default="Завтрак",
                                     blank=False,
                                     null=False,
                                     on_delete=models.CASCADE,
