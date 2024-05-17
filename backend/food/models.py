@@ -69,7 +69,7 @@ class Dishes(models.Model):
 
 
 class Orders(models.Model):
-    orders_dishes = models.ManyToManyField(Dishes,
+    dishes_list = models.ManyToManyField(Dishes,
                                            through="DishesInOrders",
                                            verbose_name="Список блюд")
 
@@ -89,12 +89,12 @@ class Orders(models.Model):
                                          default=False,
                                          verbose_name="Флаг, оплачен или нет")
 
-    orders_payment_amount = models.FloatField(validators=[
-                                                    MinValueValidator(MIN_NUMBER)
-                                              ],
-                                              null=False,
-                                              default=200,
-                                              verbose_name="Стоимость заказа (вычислимое поля)")
+    orders_price = models.FloatField(validators=[
+                                        MinValueValidator(MIN_NUMBER)
+                                    ],
+                                    null=False,
+                                    default=0,
+                                    verbose_name="Стоимость заказа (вычислимое поля)")
 
     class Meta:
         verbose_name = "Orders"
@@ -112,6 +112,40 @@ class DishesInOrders(models.Model):
 
     def __str__(self):
         return f"{self.dishes_id} {self.orders_id}"
+
+
+class Checks(models.Model):
+    orders_list = models.ManyToManyField(Orders,
+                                         through="OrdersInChecks",
+                                         verbose_name="Список заказов")
+
+    checks_created_dttm = models.DateTimeField(null=False,
+                                               auto_now_add=True,
+                                               verbose_name="Дата создания чека (datatime)")
+
+    checks_price = models.FloatField(validators=[
+                                    MinValueValidator(MIN_NUMBER)
+                                    ],
+                                    null=False,
+                                    default=0,
+                                    verbose_name="Стоимость чека (вычислимое поля)")
+
+    class Meta:
+        verbose_name = "Checks"
+
+    def __str__(self):
+        return f"{self.orders_list}"
+
+
+class OrdersInChecks(models.Model):
+    orders_id = models.ForeignKey(Orders,
+                                  on_delete=models.CASCADE)
+
+    checks_id = models.ForeignKey(Checks,
+                                  on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.orders_id} {self.checks_id}"
 
 
 class Reviews(models.Model):

@@ -7,6 +7,7 @@ router = SimpleRouter()
 
 router.register('dishes', views.DishesViewSet)
 router.register('orders', views.OrdersViewSet)
+router.register('checks', views.ChecksViewSet)
 router.register('schoolworkers', SchoolWorkersViewSet)
 router.register('parents', ParentsViewSet)
 

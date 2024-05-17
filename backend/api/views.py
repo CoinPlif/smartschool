@@ -5,7 +5,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from api import serializers
-from food.models import Dishes, Orders
+from food.models import Dishes, Orders, Checks
 
 
 class DishesViewSet(viewsets.ModelViewSet):
@@ -23,3 +23,6 @@ class OrdersViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+class ChecksViewSet(viewsets.ModelViewSet):
+    queryset = Checks.objects.all()
+    serializer_class = serializers.ChecksSerializers
