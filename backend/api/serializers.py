@@ -3,16 +3,7 @@ from rest_framework import serializers
 from rest_framework.fields import IntegerField, CharField, DateTimeField, SerializerMethodField
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from food.models import Orders, Dishes, DishesInOrders, DishTypes, OrdersInChecks, Checks
-
-
-class DishesInOrdersSerializers(serializers.ModelSerializer):
-    dish_id = IntegerField(allow_null=False)
-    orders_id = IntegerField(allow_null=False)
-
-    class Meta:
-        model = DishesInOrders
-        fields = "__all__"
+from food.models import Orders, Dishes, BrDishes, LunDishes, DinDishes, DishTypes, OrdersInChecks, Checks
 
 
 class OrdersInChecksSerializers(serializers.ModelSerializer):
@@ -40,8 +31,28 @@ class DishesSerializers(serializers.ModelSerializer):
         fields = ("id", "dishes_type", "dishes_name", "dishes_description", "dishes_calories", "dishes_price")
 
 
+class BrDishesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = BrDishes
+        fields = ("id", "br_drink", "br_main", "br_addition")
+
+
+class LunDishesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = LunDishes
+        fields = ("id", "lun_drink", "lun_first", "lun_second_garnish", "lun_second_main", "lun_addition")
+
+
+class DinDishesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = DinDishes
+        fields = ("id", "din_drink", "din_main", "din_addition")
+
+
 class OrdersSerializers(serializers.ModelSerializer):
-    dishes_list = DishesSerializers(many=True)
+    orders_breakfast_id = PrimaryKeyRelatedField(queryset=BrDishes.objects.all())
+    orders_lunch_id = PrimaryKeyRelatedField(queryset=LunDishes.objects.all())
+    orders_dinner_id = PrimaryKeyRelatedField(queryset=DinDishes.objects.all())
     orders_price = SerializerMethodField()
 
     def get_orders_price(self, instance):
@@ -51,7 +62,7 @@ class OrdersSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Orders
-        fields = ("id", 'dishes_list', 'children_id', 'orders_day_dt', 'orders_if_paid',  'orders_price')
+        fields = ("id", 'orders_breakfast_id', 'orders_lunch_id', 'orders_dinner_id', 'orders_price')
 
 
 class ChecksSerializers(serializers.ModelSerializer):
@@ -59,15 +70,17 @@ class ChecksSerializers(serializers.ModelSerializer):
     checks_price = SerializerMethodField()
 
     def get_checks_price(self, instance):
-        print(instance.orders_list.all())
         orders_list = instance.orders_list.all()
         total_price = 0
         for order in orders_list:
-            print(order.orders_price)
-            total_price += order.orders_price
+            print(order)
+            dish_list = order.dishes_list.all()
+            for dish in dish_list:
+                total_price += dish.dishes_price
         return total_price
 
     class Meta:
         model = Checks
         fields = ("id", "orders_list", "checks_created_dttm", "checks_price")
+
 
