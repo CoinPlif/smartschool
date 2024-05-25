@@ -10,7 +10,7 @@ class DishTypes(models.Model):
                                          verbose_name="Название типа блюда",
                                          blank=False,
                                          null=False,
-                                         default="Завтрак")
+                                         default="Напиток")
 
     class Meta:
         verbose_name = "Типа блюда"
@@ -72,19 +72,19 @@ class BrDishes(models.Model):
     br_drink = models.ForeignKey(Dishes,
                                  on_delete=models.CASCADE,
                                  null=True,
-                                 verbose_name="Напиток, завтрака",
+                                 verbose_name="Напиток завтрака",
                                  related_name="br_drink")
 
     br_main = models.ForeignKey(Dishes,
                                 on_delete=models.CASCADE,
                                 null=True,
-                                verbose_name="Основное, завтрака",
+                                verbose_name="Основное завтрака",
                                 related_name="br_main")
 
     br_addition = models.ForeignKey(Dishes,
                                     on_delete=models.CASCADE,
                                     null=True,
-                                    verbose_name="Дополнительное, завтрака",
+                                    verbose_name="Дополнительное",
                                     related_name="br_addition")
 
     class Meta:
@@ -98,31 +98,31 @@ class LunDishes(models.Model):
     lun_drink = models.ForeignKey(Dishes,
                                   on_delete=models.CASCADE,
                                   null=True,
-                                  verbose_name="Напиток, завтрака",
+                                  verbose_name="Напиток обеда",
                                   related_name="lun_drink")
 
     lun_first = models.ForeignKey(Dishes,
                                   on_delete=models.CASCADE,
                                   null=True,
-                                  verbose_name="Первое, обеда",
+                                  verbose_name="Первое обеда",
                                   related_name="lun_first")
 
     lun_second_garnish = models.ForeignKey(Dishes,
                                            on_delete=models.CASCADE,
                                            null=True,
-                                           verbose_name="Гарнир второе, обеда",
+                                           verbose_name="Гарнир обеда",
                                            related_name="lun_second_garnish")
 
     lun_second_main = models.ForeignKey(Dishes,
                                         on_delete=models.CASCADE,
                                         null=True,
-                                        verbose_name="Основное второе, обеда",
+                                        verbose_name="Основное обеда",
                                         related_name="lun_second_main")
 
     lun_addition = models.ForeignKey(Dishes,
                                      on_delete=models.CASCADE,
                                      null=True,
-                                     verbose_name="Дополнительное, обеда",
+                                     verbose_name="Дополнительное",
                                      related_name="lun_addition")
 
     class Meta:
@@ -136,19 +136,19 @@ class DinDishes(models.Model):
     din_drink = models.ForeignKey(Dishes,
                                   on_delete=models.CASCADE,
                                   null=True,
-                                  verbose_name="Напиток, ужин",
+                                  verbose_name="Напиток ужина",
                                   related_name="din_drink")
 
     din_main = models.ForeignKey(Dishes,
                                  on_delete=models.CASCADE,
                                  null=True,
-                                 verbose_name="Основное, ужин",
+                                 verbose_name="Основное ужина",
                                  related_name="din_main")
 
     din_addition = models.ForeignKey(Dishes,
                                      on_delete=models.CASCADE,
                                      null=True,
-                                     verbose_name="Дополнительное, ужин",
+                                     verbose_name="Дополнительное",
                                      related_name="din_addition")
 
     class Meta:

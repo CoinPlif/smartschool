@@ -6,6 +6,87 @@ from rest_framework.relations import PrimaryKeyRelatedField
 from food.models import Orders, Dishes, BrDishes, LunDishes, DinDishes, DishTypes, OrdersInChecks, Checks
 
 
+class BrDrinkRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name="Напиток завтрака")
+
+
+class BrMainRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name="Основное завтрака")
+
+
+class LunDrinkRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name=["Напиток", "Напиток обеда"])
+
+
+class LunFirstRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name="Первое обеда")
+
+
+class LunMainRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name="Основное обеда")
+
+
+class LunGarnishRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name="Гарнир обеда")
+
+
+class DinDrinkRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name=["Напиток", "Напиток ужина"])
+
+
+class DinMainRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name="Основное ужина")
+
+
+class AdditionalRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request:
+            return queryset
+        return queryset.filter(dishes_type__dishes_types_name="Дополнительное")
+
+
 class OrdersInChecksSerializers(serializers.ModelSerializer):
     checks_id = IntegerField(allow_null=False)
     orders_id = IntegerField(allow_null=False)
@@ -32,33 +113,63 @@ class DishesSerializers(serializers.ModelSerializer):
 
 
 class BrDishesSerializers(serializers.ModelSerializer):
+    br_drink = BrDrinkRelatedField(queryset=Dishes.objects.all())
+    br_main = BrMainRelatedField(queryset=Dishes.objects.all())
+    br_addition = AdditionalRelatedField(queryset=Dishes.objects.all())
+
     class Meta:
         model = BrDishes
         fields = ("id", "br_drink", "br_main", "br_addition")
 
 
 class LunDishesSerializers(serializers.ModelSerializer):
+    lun_drink = LunDrinkRelatedField(queryset=Dishes.objects.all())
+    lun_first = LunFirstRelatedField(queryset=Dishes.objects.all())
+    lun_second_garnish = LunMainRelatedField(queryset=Dishes.objects.all())
+    lun_second_main = LunGarnishRelatedField(queryset=Dishes.objects.all())
+    lun_addition = AdditionalRelatedField(queryset=Dishes.objects.all())
+
     class Meta:
         model = LunDishes
         fields = ("id", "lun_drink", "lun_first", "lun_second_garnish", "lun_second_main", "lun_addition")
 
 
 class DinDishesSerializers(serializers.ModelSerializer):
+    din_drink = DinDrinkRelatedField(queryset=Dishes.objects.all())
+    din_main = DinMainRelatedField(queryset=Dishes.objects.all())
+    din_addition = AdditionalRelatedField(queryset=Dishes.objects.all())
+
     class Meta:
         model = DinDishes
         fields = ("id", "din_drink", "din_main", "din_addition")
 
 
 class OrdersSerializers(serializers.ModelSerializer):
-    orders_breakfast_id = PrimaryKeyRelatedField(queryset=BrDishes.objects.all())
-    orders_lunch_id = PrimaryKeyRelatedField(queryset=LunDishes.objects.all())
-    orders_dinner_id = PrimaryKeyRelatedField(queryset=DinDishes.objects.all())
+    orders_breakfast_id = BrDishesSerializers()
+    orders_lunch_id = LunDishesSerializers()
+    orders_dinner_id = DinDishesSerializers()
     orders_price = SerializerMethodField()
 
-    def get_orders_price(self, instance):
-        dishes_list = instance.dishes_list.all()
-        total_price = sum(dish.dishes_price for dish in dishes_list)
-        return total_price
+    def get_orders_price(self, obj):
+        breakfast_price = sum(dish.dishes_price for dish in [
+            obj.orders_breakfast_id.br_drink,
+            obj.orders_breakfast_id.br_main,
+            obj.orders_breakfast_id.br_addition
+        ] if dish)
+        lunch_price = sum(dish.dishes_price for dish in [
+            obj.orders_lunch_id.lun_drink,
+            obj.orders_lunch_id.lun_first,
+            obj.orders_lunch_id.lun_second_garnish,
+            obj.orders_lunch_id.lun_second_main,
+            obj.orders_lunch_id.lun_addition
+        ] if dish)
+        dinner_price = sum(dish.dishes_price for dish in [
+            obj.orders_dinner_id.din_drink,
+            obj.orders_dinner_id.din_main,
+            obj.orders_dinner_id.din_addition
+        ] if dish)
+        return breakfast_price + lunch_price + dinner_price
+
 
     class Meta:
         model = Orders

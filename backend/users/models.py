@@ -55,11 +55,8 @@ class Parents(models.Model):
                                         null=False,
                                         verbose_name="Пароль родителя")
 
-    administrators_id = models.ForeignKey(Administrators,
-                                          on_delete=models.CASCADE,
-                                          verbose_name="id администратора, заносившего пользователя")
-
     card_id = models.ForeignKey(Cards,
+                                null=True,
                                 on_delete=models.CASCADE,
                                 verbose_name="Номер карты родителя родителя")
 
@@ -93,15 +90,8 @@ class SchoolWorkers(models.Model):
                                               null=False,
                                               verbose_name="Пароль работника учреждения")
 
-    administrators_id = models.ForeignKey(Administrators,
-                                          on_delete=models.CASCADE,
-                                          verbose_name="id администратора, заносившего пользователя")
-
     class Meta:
         verbose_name = "Работники школы"
 
     def __str__(self):
         return f"{self.schoolworkers_login}"
-
-
-
