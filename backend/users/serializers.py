@@ -7,10 +7,10 @@ from rest_framework.fields import (SerializerMethodField, IntegerField, ImageFie
 class SchoolWorkersSerializers(serializers.ModelSerializer):
     class Meta:
         model = SchoolWorkers
-        fields = ('id', 'schoolworkers_login', 'schoolworkers_password', 'administrators_id')
+        fields = ('id', 'schoolworkers_login', 'schoolworkers_password')
 
 
 class ParentsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Parents
-        fields = ('parents_login', 'parents_password', 'parents_name', 'card_id', 'administrators_id')
+        fields = ('id', 'parents_login', 'parents_password', 'parents_name', 'card_id')

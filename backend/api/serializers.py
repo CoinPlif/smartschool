@@ -184,10 +184,24 @@ class ChecksSerializers(serializers.ModelSerializer):
         orders_list = instance.orders_list.all()
         total_price = 0
         for order in orders_list:
-            print(order)
-            dish_list = order.dishes_list.all()
-            for dish in dish_list:
-                total_price += dish.dishes_price
+            breakfast_price = sum(dish.dishes_price for dish in [
+                order.orders_breakfast_id.br_drink,
+                order.orders_breakfast_id.br_main,
+                order.orders_breakfast_id.br_addition
+            ] if dish)
+            lunch_price = sum(dish.dishes_price for dish in [
+                order.orders_lunch_id.lun_drink,
+                order.orders_lunch_id.lun_first,
+                order.orders_lunch_id.lun_second_garnish,
+                order.orders_lunch_id.lun_second_main,
+                order.orders_lunch_id.lun_addition
+            ] if dish)
+            dinner_price = sum(dish.dishes_price for dish in [
+                order.orders_dinner_id.din_drink,
+                order.orders_dinner_id.din_main,
+                order.orders_dinner_id.din_addition
+            ] if dish)
+            total_price += (breakfast_price + lunch_price + dinner_price)
         return total_price
 
     class Meta:

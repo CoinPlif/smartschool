@@ -69,7 +69,12 @@ class Parents(models.Model):
 
 class Children(models.Model):
     children_name = models.CharField(max_length=PASSWORD_LENGTH,
+                                     null=False,
                                      verbose_name="Имя ребенка")
+
+    children_surname = models.CharField(max_length=PASSWORD_LENGTH,
+                                        null=True,
+                                        verbose_name="Фамилия ребенка")
 
     parents_id = models.ForeignKey(Parents,
                                    on_delete=models.CASCADE)
@@ -78,7 +83,7 @@ class Children(models.Model):
         verbose_name = "Дети"
 
     def __str__(self):
-        return f"{self.children_name}"
+        return f"{self.children_name} {self.children_surname}"
 
 
 class SchoolWorkers(models.Model):
