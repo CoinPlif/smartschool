@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from users.models import SchoolWorkers, Parents
-from rest_framework.fields import (SerializerMethodField, IntegerField, ImageField, ReadOnlyField, CharField)
+from users.models import SchoolWorkers, Parents, Children
 
 
 class SchoolWorkersSerializers(serializers.ModelSerializer):
@@ -13,4 +12,11 @@ class SchoolWorkersSerializers(serializers.ModelSerializer):
 class ParentsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Parents
-        fields = ('id', 'parents_login', 'parents_password', 'parents_name', 'card_id')
+        fields = ('id', 'parents_login', 'parents_password', 'parents_name')
+
+
+class ChildrenSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Children
+        fields = ('id', 'children_name', 'children_surname', 'parents_id')
+

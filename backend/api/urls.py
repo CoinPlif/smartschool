@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
-from users.views import SchoolWorkersViewSet, ParentsViewSet
+from users.views import SchoolWorkersViewSet, ParentsViewSet, ChildrenViewSet
 from api import views
 
 router = SimpleRouter()
@@ -13,6 +13,7 @@ router.register('lundishes', views.LunDishesViewSet)
 router.register('dindishes', views.DinDishesViewSet)
 router.register('schoolworkers', SchoolWorkersViewSet)
 router.register('parents', ParentsViewSet)
+router.register('children', ChildrenViewSet)
 
 
 urlpatterns = [

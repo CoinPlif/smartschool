@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from .constants import LENGTH_NAME, LENGTH_DESCRIPTION, MIN_NUMBER, MAX_PRICE, MAX_CALORIES, MAX_MARK
-from users.models import (SchoolWorkers, Parents, Children)
+from users.models import (Parents, Children)
 
 
 class DishTypes(models.Model):

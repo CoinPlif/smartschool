@@ -4,26 +4,6 @@ from django.db import models
 from .constants import (LOGIN_LENGTH, PASSWORD_LENGTH, CARD_LENGTH, CVV_LENGTH)
 
 
-class Cards(models.Model):
-    cards_number = models.CharField(max_length=CARD_LENGTH,
-                                    null=False,
-                                    verbose_name="Номер банковской карты")
-
-    cards_cvv = models.CharField(max_length=CVV_LENGTH,
-                                 null=False,
-                                 verbose_name="CVV карты")
-
-    cards_expiry = models.CharField(max_length=LOGIN_LENGTH,
-                                    null=False,
-                                    verbose_name="Срок карты")
-
-    class Meta:
-        verbose_name = "Карты"
-
-    def __str__(self):
-        return f"{self.cards_number}"
-
-
 class Administrators(models.Model):
     administrators_login = models.CharField(max_length=LOGIN_LENGTH,
                                             default="admin",
@@ -47,18 +27,17 @@ class Parents(models.Model):
                                      null=False,
                                      verbose_name="Логин родителя")
 
-    parents_name = models.CharField(max_length=LOGIN_LENGTH,
-                                    null=False,
-                                    verbose_name="Имя родителя")
-
     parents_password = models.CharField(max_length=PASSWORD_LENGTH,
                                         null=False,
                                         verbose_name="Пароль родителя")
 
-    card_id = models.ForeignKey(Cards,
-                                null=True,
-                                on_delete=models.CASCADE,
-                                verbose_name="Номер карты родителя родителя")
+    parents_name = models.CharField(max_length=LOGIN_LENGTH,
+                                    null=False,
+                                    verbose_name="Имя родителя")
+
+    parents_surname = models.CharField(max_length=LOGIN_LENGTH,
+                                       null=False,
+                                       verbose_name="Фамилия родителя")
 
     class Meta:
         verbose_name = "Родители"
@@ -100,3 +79,28 @@ class SchoolWorkers(models.Model):
 
     def __str__(self):
         return f"{self.schoolworkers_login}"
+
+class Cards(models.Model):
+    cards_number = models.CharField(max_length=CARD_LENGTH,
+                                    null=False,
+                                    verbose_name="Номер банковской карты")
+
+    cards_cvv = models.CharField(max_length=CVV_LENGTH,
+                                 null=False,
+                                 verbose_name="CVV карты")
+
+    cards_expiry = models.CharField(max_length=LOGIN_LENGTH,
+                                    null=False,
+                                    verbose_name="Срок карты")
+    
+    cards_owner = models.ForeignKey(Parents,
+                                    on_delete=models.CASCADE,
+                                    null=False,
+                                    verbose_name="Родитель, владелец карты")
+
+    class Meta:
+        verbose_name = "Карты"
+
+    def __str__(self):
+        return f"{self.cards_number}"
+    

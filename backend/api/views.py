@@ -22,6 +22,7 @@ class BrDishesViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BrDishesSerializers
 
 
+
 class LunDishesViewSet(viewsets.ModelViewSet):
     queryset = LunDishes.objects.all()
     serializer_class = serializers.LunDishesSerializers
@@ -35,11 +36,6 @@ class DinDishesViewSet(viewsets.ModelViewSet):
 class OrdersViewSet(viewsets.ModelViewSet):
     queryset = Orders.objects.all()
     serializer_class = serializers.OrdersSerializers
-
-    def get(self, request):
-        queryset = Orders.objects.all()
-        serializer = serializers.OrdersSerializers(queryset, many=True)
-        return Response(serializer.data)
 
 
 class ChecksViewSet(viewsets.ModelViewSet):
