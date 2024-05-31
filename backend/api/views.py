@@ -22,7 +22,6 @@ class BrDishesViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BrDishesSerializers
 
 
-
 class LunDishesViewSet(viewsets.ModelViewSet):
     queryset = LunDishes.objects.all()
     serializer_class = serializers.LunDishesSerializers
