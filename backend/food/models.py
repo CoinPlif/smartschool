@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from datetime import date
 
 from .constants import LENGTH_NAME, LENGTH_DESCRIPTION, MIN_NUMBER, MAX_PRICE, MAX_CALORIES, MAX_MARK
 from users.models import (Parents, Children)
@@ -56,11 +57,6 @@ class Dishes(models.Model):
     valid_to_dttm = models.DateTimeField(null=False,
                                          verbose_name="Дата конца нахождения блюда в меню (datatime)")
 
-    #SchoolWorkers_id = models.ForeignKey(SchoolWorkers,
-    #                                     null=False,
-    #                                     on_delete=models.CASCADE,
-    #                                     verbose_name="id работника учреждения, который выставил блюдо")
-
     class Meta:
         verbose_name = "Блюда"
 
@@ -72,26 +68,38 @@ class BrDishes(models.Model):
     br_drink = models.ForeignKey(Dishes,
                                  on_delete=models.CASCADE,
                                  null=True,
+                                 blank=True,
                                  verbose_name="Напиток завтрака",
                                  related_name="br_drink")
 
     br_main = models.ForeignKey(Dishes,
                                 on_delete=models.CASCADE,
                                 null=True,
+                                blank=True,
                                 verbose_name="Основное завтрака",
                                 related_name="br_main")
 
     br_addition = models.ForeignKey(Dishes,
                                     on_delete=models.CASCADE,
                                     null=True,
+                                    blank=True,
                                     verbose_name="Дополнительное",
                                     related_name="br_addition")
+
+    br_day = models.DateField(null=False,
+                              default=date.today,
+                              verbose_name="Дата дня")
+    
+    br_child = models.ForeignKey(Children,
+                                 on_delete=models.CASCADE,
+                                 null=False,
+                                 verbose_name="Ребенок")
 
     class Meta:
         verbose_name = "Список блюд на завтрак"
 
     def __str__(self):
-        return f'{self.br_drink} {self.br_main} {self.br_addition}'
+        return f'{self.br_drink} {self.br_main} {self.br_addition} {self.br_day} {self.br_day} {self.br_child}'
 
 
 class LunDishes(models.Model):
@@ -125,11 +133,20 @@ class LunDishes(models.Model):
                                      verbose_name="Дополнительное",
                                      related_name="lun_addition")
 
+    lun_day = models.DateField(null=False,
+                               default=date.today,
+                               verbose_name="Дата")
+    
+    lun_child = models.ForeignKey(Children,
+                                  on_delete=models.CASCADE,
+                                  null=False,
+                                  verbose_name="Ребенок")
+
     class Meta:
         verbose_name = "Список блюд на обед"
 
     def __str__(self):
-        return f'{self.lun_drink} {self.lun_first} {self.lun_second_garnish} {self.lun_second_main} {self.lun_addition}'
+        return f'{self.lun_drink} {self.lun_first} {self.lun_second_garnish} {self.lun_second_main} {self.lun_addition} {self.lun_day} {self.lun_child}'
 
 
 class DinDishes(models.Model):
@@ -144,18 +161,33 @@ class DinDishes(models.Model):
                                  null=True,
                                  verbose_name="Основное ужина",
                                  related_name="din_main")
+    
+    din_garnish = models.ForeignKey(Dishes,
+                                 on_delete=models.CASCADE,
+                                 null=True,
+                                 verbose_name="Гарнир ужина",
+                                 related_name="din_garnish")
 
     din_addition = models.ForeignKey(Dishes,
                                      on_delete=models.CASCADE,
                                      null=True,
                                      verbose_name="Дополнительное",
                                      related_name="din_addition")
+    
+    din_day = models.DateField(null=False,
+                               default=date.today,
+                               verbose_name="Дата")
+    
+    din_child = models.ForeignKey(Children,
+                                 on_delete=models.CASCADE,
+                                 null = False,
+                                 verbose_name="Ребенок")
 
     class Meta:
         verbose_name = "Список блюд на ужин"
 
     def __str__(self):
-        return f'{self.din_drink} {self.din_main} {self.din_addition}'
+        return f'{self.din_drink} {self.din_main} {self.din_addition} {self.din_garnish} {self.din_day} {self.din_child}'
 
 
 class Orders(models.Model):

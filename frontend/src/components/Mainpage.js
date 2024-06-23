@@ -33,17 +33,17 @@ const Mainpage = () => {
     return (
         <div>
             <h1>Dishes</h1>
-            <ul>
-                {dishes.map(dish => (
-                    <li key={dish.id}>
-                        <p><strong>Name:</strong> {dish.dishes_name}</p>
-                        <p><strong>Description:</strong> {dish.dishes_description}</p>
-                        <p><strong>Type:</strong> {dish.dishes_type}</p>
-                        <p><strong>Calories:</strong> {dish.dishes_calories}</p>
-                        <p><strong>Price:</strong> ${dish.dishes_price}</p>
-                    </li>
-                ))}
-            </ul>
+                <ul>
+                    {dishes.map(dish => (
+                        <li key={dish.id}>
+                            <p><strong>Name:</strong> {dish.dishes_name}</p>
+                            <p><strong>Description:</strong> {dish.dishes_description}</p>
+                            <p><strong>Type:</strong> {dish.dishes_type}</p>
+                            <p><strong>Calories:</strong> {dish.dishes_calories}</p>
+                            <p><strong>Price:</strong> ${dish.dishes_price}</p>
+                        </li>
+                    ))}
+                </ul>
         </div>
     );
 };
