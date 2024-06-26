@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.role-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Стиль кнопок ролей */
+.role-button {
+    padding: 15px 40px; /* Размеры кнопки: вертикальный отступ 15px, горизонтальный отступ 40px */
+    font-size: 1.2em; /* Размер шрифта 1.2em */
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 25px; /* Закругление углов */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%; /* Занимать всю доступную ширину */
+    max-width: 300px; /* Максимальная ширина кнопки */
+    max-height: 400px;
+}
+
+.role-button:hover {
+    background-color: rgb(114, 114, 114);
+    color: white;
+}
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

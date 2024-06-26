@@ -1,0 +1,44 @@
+/* Общие стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.children-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.child-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 10px 0;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.child-button:hover {
+    background-color: rgb(114, 114, 114);
+    color: white;
+}
+
+.child-button.selected {
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+/* Стили для сообщения об ошибке */
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+

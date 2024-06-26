@@ -21,6 +21,9 @@ class BrDishesViewSet(viewsets.ModelViewSet):
     queryset = BrDishes.objects.all()
     serializer_class = serializers.BrDishesSerializers
 
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ("br_child",)
+
 
 class LunDishesViewSet(viewsets.ModelViewSet):
     queryset = LunDishes.objects.all()

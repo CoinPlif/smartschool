@@ -111,7 +111,7 @@ function Dinner() {
                     {index < dishTypes.length - 1 && <hr />}
                 </div>
             ))}
-            <button className="submit-button" onClick={handleSubmit}>Submit</button>
+            <button className="submit-button" onClick={handleSubmit}>Подтвердить</button>
         </div>
     );
 }

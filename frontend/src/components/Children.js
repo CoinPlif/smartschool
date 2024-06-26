@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import './Children.css'; // Подключаем стили
 
 function Children() {
     const [error, setError] = useState(null);
@@ -41,19 +42,18 @@ function Children() {
     };
 
     return (
-        <div>
+        <div className="children-container">
             <h1>Выберете ребенка</h1>
-            {error && <p>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
             {children.map(child => (
-                    <button
-                        key={child.id}
-                        className="child-button"
-                        onClick={() => handleChildSelection(child.id)}
-                    >
-                        {child.children_name} {child.children_surname}
-                    </button>
-                ))
-            }
+                <button
+                    key={child.id}
+                    className="child-button"
+                    onClick={() => handleChildSelection(child.id)}
+                >
+                    {child.children_name} {child.children_surname}
+                </button>
+            ))}
         </div>
     );
 }
