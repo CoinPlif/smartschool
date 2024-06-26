@@ -22,17 +22,23 @@ class BrDishesViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BrDishesSerializers
 
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ("br_child",)
+    filterset_fields = ("br_child", "br_day")
 
 
 class LunDishesViewSet(viewsets.ModelViewSet):
     queryset = LunDishes.objects.all()
     serializer_class = serializers.LunDishesSerializers
 
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ("lun_child", "lun_day")
+
 
 class DinDishesViewSet(viewsets.ModelViewSet):
     queryset = DinDishes.objects.all()
     serializer_class = serializers.DinDishesSerializers
+
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ("din_child", "din_day")
 
 
 class OrdersViewSet(viewsets.ModelViewSet):

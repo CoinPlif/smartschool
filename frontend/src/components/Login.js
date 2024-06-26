@@ -6,24 +6,38 @@ import './Login.css'; // Подключаем стили
 function Login() {
     const [error, setError] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [message, setMessage] = useState(false);
+    const [message, setMessage] = useState('');
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('parent');
 
     const fetchUserData = async () => {
+        let apiUrl = '';
+
+        if (role === 'parent') {
+            apiUrl = 'http://127.0.0.1:8000/api/parents/';
+        } else if (role === 'schoolworker') {
+            apiUrl = 'http://127.0.0.1:8000/api/schoolworkers/';
+        } else {
+            setMessage('Не выбрана роль');
+            return;
+        }
+
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/parents/');
+            const response = await axios.get(apiUrl);
             const users = response.data;
             const user = users.find(
-                user => user.parents_login === login && user.parents_password === password
+                user => (role === 'parent' ? user.parents_login : user.schoolworkers_login) === login &&
+                        (role === 'parent' ? user.parents_password : user.schoolworkers_password) === password
             );
 
             if (user) {
                 setMessage(`User found: ${user.id}`);
                 localStorage.setItem('userId', user.id);
+                localStorage.setItem('role', role); // Save role to localStorage
                 setIsLoggedIn(true);
             } else {
-                setMessage('Неверный логин или пароль');   
+                setMessage('Неверный логин или пароль');
             }
         } catch (error) {
             setError('Неверные учетные данные. Пожалуйста, попробуйте снова.');
@@ -34,14 +48,28 @@ function Login() {
     if (isLoggedIn) {
         return (
             <div className="register-container">
-                <Navigate to={`/children`} />
+                <Navigate to={role === 'parent' ? '/children' : '/dishes'} />
             </div>
         );
     }
 
     return (
         <div className="login-container">
-            <h1>Login</h1>
+            <h1>Введите учетные данные</h1>
+            <div className="role-buttons">
+                <button 
+                    className={`role-button ${role === 'parent' ? 'active' : ''}`} 
+                    onClick={() => setRole('parent')}
+                >
+                    Родитель
+                </button>
+                <button 
+                    className={`role-button ${role === 'schoolworker' ? 'active' : ''}`} 
+                    onClick={() => setRole('schoolworker')}
+                >
+                    Сотрудник
+                </button>
+            </div>
             <div className="login-form">
                 <input
                     type="text"

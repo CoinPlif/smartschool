@@ -21,7 +21,6 @@ function Breakfast() {
                 allDishes.sort((a, b) => dishTypes.indexOf(a.dishes_type) - dishTypes.indexOf(b.dishes_type));
                 setDishes(allDishes);
 
-                // Получаем информацию о выбранных блюдах на конкретную дату и для конкретного ребенка
                 const selectedResponse = await axios.get('http://localhost:8000/api/brdishes/');
                 const filteredSelectedDishes = selectedResponse.data.filter(item => item.br_day === br_day && Number(item.br_child) === Number(br_child));
                 if (filteredSelectedDishes.length > 0) {

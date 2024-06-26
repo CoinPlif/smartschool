@@ -153,66 +153,40 @@ class DinDishesSerializers(serializers.ModelSerializer):
         fields = ("id", "din_drink", "din_main", "din_garnish", "din_addition", "din_day", "din_child")
 
 
+class BrDishesRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        return queryset
+
+
+class LunDishesRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        return queryset
+
+
+class DinDishesRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        return queryset
+
+
 class OrdersSerializers(serializers.ModelSerializer):
-    orders_breakfast_id = BrDishesSerializers()
-    orders_lunch_id = LunDishesSerializers()
-    orders_dinner_id = DinDishesSerializers()
-    orders_price = SerializerMethodField()
-
-    def get_orders_price(self, obj):
-        breakfast_price = sum(dish.dishes_price for dish in [
-            obj.orders_breakfast_id.br_drink,
-            obj.orders_breakfast_id.br_main,
-            obj.orders_breakfast_id.br_addition
-        ] if dish)
-        lunch_price = sum(dish.dishes_price for dish in [
-            obj.orders_lunch_id.lun_drink,
-            obj.orders_lunch_id.lun_first,
-            obj.orders_lunch_id.lun_garnish,
-            obj.orders_lunch_id.lun_main,
-            obj.orders_lunch_id.lun_addition
-        ] if dish)
-        dinner_price = sum(dish.dishes_price for dish in [
-            obj.orders_dinner_id.din_drink,
-            obj.orders_dinner_id.din_main,
-            obj.orders_dinner_id.din_garnish,
-            obj.orders_dinner_id.din_addition
-        ] if dish)
-        return breakfast_price + lunch_price + dinner_price
-
+    orders_breakfast_id = BrDishesRelatedField(queryset=BrDishes.objects.all(), required=False, allow_null=True)
+    orders_lunch_id = LunDishesRelatedField(queryset=LunDishes.objects.all(), required=False, allow_null=True)
+    orders_dinner_id = DinDishesRelatedField(queryset=DinDishes.objects.all(), required=False, allow_null=True)
 
     class Meta:
         model = Orders
-        fields = ("id", 'orders_breakfast_id', 'orders_lunch_id', 'orders_dinner_id', 'orders_price')
+        fields = ("id", 'orders_breakfast_id', 'orders_lunch_id', 'orders_dinner_id', 'orders_price', "children_id", "orders_day_dt", "orders_price")
 
 
 class ChecksSerializers(serializers.ModelSerializer):
     orders_list = OrdersSerializers(many=True)
     checks_price = SerializerMethodField()
-
-    def get_checks_price(self, instance):
-        orders_list = instance.orders_list.all()
-        total_price = 0
-        for order in orders_list:
-            breakfast_price = sum(dish.dishes_price for dish in [
-                order.orders_breakfast_id.br_drink,
-                order.orders_breakfast_id.br_main,
-                order.orders_breakfast_id.br_addition
-            ] if dish)
-            lunch_price = sum(dish.dishes_price for dish in [
-                order.orders_lunch_id.lun_drink,
-                order.orders_lunch_id.lun_first,
-                order.orders_lunch_id.lun_second_garnish,
-                order.orders_lunch_id.lun_second_main,
-                order.orders_lunch_id.lun_addition
-            ] if dish)
-            dinner_price = sum(dish.dishes_price for dish in [
-                order.orders_dinner_id.din_drink,
-                order.orders_dinner_id.din_main,
-                order.orders_dinner_id.din_addition
-            ] if dish)
-            total_price += (breakfast_price + lunch_price + dinner_price)
-        return total_price
 
     class Meta:
         model = Checks

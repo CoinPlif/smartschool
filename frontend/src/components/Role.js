@@ -8,7 +8,6 @@ function Role() {
     const handleRole = (role) => {
         localStorage.setItem('role', role);
         setRole(role);
-        console.log(`Role ${role} is choosed`)
     };
 
     if (role) {

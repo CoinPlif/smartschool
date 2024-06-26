@@ -68,3 +68,14 @@ h1 {
 .submit-button:hover {
     background-color: black; /* Цвет кнопки при наведении */
 }
+
+/* Новые стили для выделения завершенных и частично завершенных дней */
+.completed-date {
+    background-color: rgb(77, 174, 77) !important;
+    color: white !important;
+}
+
+.partial-date {
+    background-color: rgb(225, 225, 46) !important;
+    color: black !important;
+}

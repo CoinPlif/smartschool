@@ -77,7 +77,7 @@ function Dinner() {
                 const response = await axios.post('http://localhost:8000/api/dindishes/', dinDishData);
                 console.log("Successfully submitted:", response.data);
             }
-            navigate('/nextpage');
+            navigate('/order');
         } catch (error) {
             console.error("Axios error config:", error.config);
         }

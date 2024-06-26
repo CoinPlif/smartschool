@@ -3,12 +3,15 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
-import './Date.css'; // Подключаем стили
+import './Date.css';
 
 function DatePick() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [confirmedDate, setConfirmedDate] = useState(null);
     const [bookedDates, setBookedDates] = useState([]);
+    const [completedOrders, setCompletedOrders] = useState([]);
+    const [partialOrders, setPartialOrders] = useState([]);
+    const [redirectTo, setRedirectTo] = useState(null);
     const today = new Date();
     const childId = localStorage.getItem('childId');
 
@@ -24,7 +27,40 @@ function DatePick() {
             }
         };
 
+        const fetchCompletedOrders = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/api/orders/?child=${childId}`);
+                const responseData = response.data;
+                const dates = responseData.map(order => new Date(order.orders_day_dt));
+                setCompletedOrders(dates);
+            } catch (error) {
+                console.error('Ошибка при загрузке завершенных заказов:', error);
+            }
+        };
+
+        const fetchPartialOrders = async () => {
+            try {
+                const [brResponse, lunResponse, dinResponse] = await Promise.all([
+                    axios.get(`http://localhost:8000/api/brdishes/?br_child=${childId}`),
+                    axios.get(`http://localhost:8000/api/lundishes/?lun_child=${childId}`),
+                    axios.get(`http://localhost:8000/api/dindishes/?din_child=${childId}`)
+                ]);
+
+                const brDates = brResponse.data.map(order => new Date(order.br_day));
+                const lunDates = lunResponse.data.map(order => new Date(order.lun_day));
+                const dinDates = dinResponse.data.map(order => new Date(order.din_day));
+
+                const allPartialDates = [...brDates, ...lunDates, ...dinDates];
+                const uniquePartialDates = Array.from(new Set(allPartialDates.map(date => date.toDateString()))).map(date => new Date(date));
+                setPartialOrders(uniquePartialDates);
+            } catch (error) {
+                console.error('Ошибка при загрузке частичных заказов:', error);
+            }
+        };
+
         fetchBookedDates();
+        fetchCompletedOrders();
+        fetchPartialOrders();
     }, [childId]);
 
     const handleDateChange = (date) => {
@@ -35,6 +71,19 @@ function DatePick() {
         const formattedDate = formatDate(selectedDate);
         localStorage.setItem('date', formattedDate);
         setConfirmedDate(selectedDate);
+
+        const isCompletedOrder = completedOrders.some(
+            (completedDate) =>
+                completedDate.getDate() === selectedDate.getDate() &&
+                completedDate.getMonth() === selectedDate.getMonth() &&
+                completedDate.getFullYear() === selectedDate.getFullYear()
+        );
+
+        if (isCompletedOrder) {
+            setRedirectTo('/order');
+        } else {
+            setRedirectTo('/breakfast');
+        }
     };
 
     const formatDate = (date) => {
@@ -44,12 +93,34 @@ function DatePick() {
         return `${year}-${month}-${day}`;
     };
 
-    if (confirmedDate) {
-        return (
-            <div className="register-container">
-                <Navigate to={`/breakfast`} />
-            </div>
+    const getDayClassName = (date) => {
+        const isCompleted = completedOrders.some(
+            (completedDate) =>
+                completedDate.getDate() === date.getDate() &&
+                completedDate.getMonth() === date.getMonth() &&
+                completedDate.getFullYear() === date.getFullYear()
         );
+
+        if (isCompleted) {
+            return 'completed-date';
+        }
+
+        const isPartial = partialOrders.some(
+            (partialDate) =>
+                partialDate.getDate() === date.getDate() &&
+                partialDate.getMonth() === date.getMonth() &&
+                partialDate.getFullYear() === date.getFullYear()
+        );
+
+        if (isPartial) {
+            return 'partial-date';
+        }
+
+        return undefined;
+    };
+
+    if (redirectTo) {
+        return <Navigate to={redirectTo} />;
     }
 
     return (
@@ -61,24 +132,15 @@ function DatePick() {
                     onChange={handleDateChange}
                     dateFormat="dd/MM/yyyy"
                     placeholderText="Выберите дату"
-                    minDate={today} // Устанавливаем минимальную дату как сегодня
+                    minDate={today}
                     className="datepicker-input"
-                    highlightDates={bookedDates} // Подсвечиваем забронированные даты
-                    dayClassName={(date) =>
-                        bookedDates.some(
-                            (bookedDate) =>
-                                bookedDate.getDate() === date.getDate() &&
-                                bookedDate.getMonth() === date.getMonth() &&
-                                bookedDate.getFullYear() === date.getFullYear()
-                        )
-                            ? 'booked-date' // Класс для забронированных дат
-                            : undefined
-                    }
+                    highlightDates={bookedDates}
+                    dayClassName={getDayClassName}
                 />
                 <button
                     className="submit-button"
                     onClick={handleConfirmDate}
-                    disabled={!selectedDate} // Делаем кнопку неактивной, если дата не выбрана
+                    disabled={!selectedDate}
                 >
                     Выбрать
                 </button>
