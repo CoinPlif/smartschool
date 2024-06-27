@@ -4,7 +4,7 @@
     justify-content: space-around;
     align-items: flex-start;
     padding: 20px;
-    margin-top: 90px;
+    min-height: 80vh;
 }
 
 .meal {

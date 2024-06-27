@@ -1,16 +1,19 @@
-/* src/components/Header.css */
-
 .header {
+    top: 0; /* Размещаем сверху страницы */
+    left: 0; 
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    padding: 0px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #ffffff;
-    color: white;
 }
 
 .logo {
-    width: 100px;
+    width: 150px;
+    height: auto;
 }
 
 nav ul {

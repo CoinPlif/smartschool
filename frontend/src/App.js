@@ -1,10 +1,10 @@
-import logo from './images/logo.png';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Mainpage from './components/Mainpage';
 import Header from './components/Header';
 import Login from './components/Login';
 import Children from './components/Children';
+import Account from './components/Account';
 import Role from './components/Role';
 import DatePick from './components/Date';
 import Breakfast from './components/Breakfast';
@@ -15,21 +15,30 @@ import Order from './components/Order';
 function App() {
   return (
     <Router>
-      <div className="app">
-      <Header />
-        <Routes>
-          <Route exact path="/main" element={<Mainpage/>} />
-          <Route exact path="/login" element={<Login/>} />
-          <Route exact path="/children" element={<Children/>} />
-          <Route exact path="/role" element={<Role/>} />
-          <Route exact path="/date" element={<DatePick/>} />
-          <Route exact path="/breakfast" element={<Breakfast/>} />
-          <Route exact path="/lunch" element={<Lunch/>} />
-          <Route exact path="/dinner" element={<Dinner/>} />
-          <Route exact path="/order" element={<Order/>} />
-        </Routes>
-      </div>
-  </Router>
+      <Main />
+    </Router>
+  );
+}
+
+function Main() {
+  const location = useLocation();
+  const showHeader = location.pathname !== '/login' && location.pathname !== '/role';
+
+  return (
+    <div className="app">
+     {showHeader && <Header />} 
+      <Routes>
+        <Route exact path="/main" element={<Mainpage />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/children" element={<Children />} />
+        <Route exact path="/role" element={<Role />} />
+        <Route exact path="/date" element={<DatePick />} />
+        <Route exact path="/breakfast" element={<Breakfast />} />
+        <Route exact path="/lunch" element={<Lunch />} />
+        <Route exact path="/dinner" element={<Dinner />} />
+        <Route exact path="/order" element={<Order />} />
+      </Routes>
+    </div>
   );
 }
 

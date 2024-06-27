@@ -10,12 +10,11 @@ function Login() {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('parent');
-
     const fetchUserData = async () => {
         let apiUrl = '';
 
         if (role === 'parent') {
-            apiUrl = 'http://127.0.0.1:8000/api/parents/';
+            apiUrl = 'http://localhost:8000/api/parents/';
         } else if (role === 'schoolworker') {
             apiUrl = 'http://127.0.0.1:8000/api/schoolworkers/';
         } else {
@@ -34,7 +33,7 @@ function Login() {
             if (user) {
                 setMessage(`User found: ${user.id}`);
                 localStorage.setItem('userId', user.id);
-                localStorage.setItem('role', role); // Save role to localStorage
+                localStorage.setItem('role', role);
                 setIsLoggedIn(true);
             } else {
                 setMessage('Неверный логин или пароль');
