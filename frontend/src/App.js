@@ -11,6 +11,7 @@ import Breakfast from './components/Breakfast';
 import Lunch from './components/Lunch';
 import Dinner from './components/Dinner';
 import Order from './components/Order';
+import Menu from './components/Menu';
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function Main() {
         <Route exact path="/lunch" element={<Lunch />} />
         <Route exact path="/dinner" element={<Dinner />} />
         <Route exact path="/order" element={<Order />} />
+        <Route exact path="/account" element={<Account />} />
+        <Route exact path="/menu" element={<Menu />} />
       </Routes>
     </div>
   );

@@ -104,9 +104,15 @@ body {
 .submit-button {
     padding: 10px 20px;
     font-size: 1em;
-    margin-top: 20px;
-    cursor: pointer;
+    cursor: not-allowed;
+    border: none;
+    border-radius: 15px;
+    background-color: grey;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
 }
+
+
 
 .dishes-section hr {
     margin: 10px 0;

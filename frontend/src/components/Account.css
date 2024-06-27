@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    min-height: 80vh;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+#account-main {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#account-main h1 {
+    text-align: center;
+}
+
+#account-main h4 {
+    margin-bottom: 0;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+#account-main .account {
+    width: 97%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.save-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.save-button:hover {
+    background-color: rgb(114, 114, 114);
+    color: white;
+}
+
+.save-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#account-main .error-message, #account-main .success-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#account-main .success-message {
+    color: green;
+}
