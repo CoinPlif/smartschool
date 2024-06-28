@@ -29,7 +29,7 @@ function DatePick() {
 
         const fetchCompletedOrders = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/orders/?child=${childId}`);
+                const response = await axios.get(`http://localhost:8000/api/orders/?children_id=${childId}`);
                 const responseData = response.data;
                 const dates = responseData.map(order => new Date(order.orders_day_dt));
                 setCompletedOrders(dates);
@@ -67,24 +67,38 @@ function DatePick() {
         setSelectedDate(date);
     };
 
-    const handleConfirmDate = () => {
+    const handleConfirmDate = async () => {
         const formattedDate = formatDate(selectedDate);
         localStorage.setItem('date', formattedDate);
         setConfirmedDate(selectedDate);
-
-        const isCompletedOrder = completedOrders.some(
-            (completedDate) =>
-                completedDate.getDate() === selectedDate.getDate() &&
-                completedDate.getMonth() === selectedDate.getMonth() &&
-                completedDate.getFullYear() === selectedDate.getFullYear()
-        );
-
-        if (isCompletedOrder) {
-            setRedirectTo('/order');
-        } else {
-            setRedirectTo('/breakfast');
+    
+        try {
+            // Проверяем наличие завершенного заказа в localhost:8000/api/orders/
+            const orderResponse = await axios.get(`http://localhost:8000/api/orders/?children_id=${childId}`);
+            const hasCompletedOrder = orderResponse.data.some(order => {
+                const orderDate = new Date(order.orders_day_dt);
+                return (
+                    orderDate.getDate() === selectedDate.getDate() &&
+                    orderDate.getMonth() === selectedDate.getMonth() &&
+                    orderDate.getFullYear() === selectedDate.getFullYear()
+                );
+            });
+    
+            if (hasCompletedOrder) {
+                setRedirectTo('/order');
+                return;
+            }else{
+                setRedirectTo('/breakfast');
+                return;
+            }
+    
+            
+        } catch (error) {
+            console.error('Ошибка при проверке заказов:', error);
         }
     };
+    
+    
 
     const formatDate = (date) => {
         const day = String(date.getDate()).padStart(2, '0');

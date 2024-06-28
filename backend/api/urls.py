@@ -11,9 +11,11 @@ router.register('checks', views.ChecksViewSet)
 router.register('brdishes', views.BrDishesViewSet)
 router.register('lundishes', views.LunDishesViewSet)
 router.register('dindishes', views.DinDishesViewSet)
+router.register('types', views.DishTypesViewSet)
 router.register('schoolworkers', SchoolWorkersViewSet)
 router.register('parents', ParentsViewSet)
 router.register('children', ChildrenViewSet)
+
 
 
 urlpatterns = [

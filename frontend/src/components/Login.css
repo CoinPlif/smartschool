@@ -3,14 +3,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 80vh;
+    min-height: 90vh;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: white;
 }
 
 h1 {
     margin-bottom: 20px;
-    color: #333;
+    color: black;
 }
 
 .role-buttons {
@@ -25,7 +25,6 @@ h1 {
     cursor: pointer;
     background-color: white;
     border: 1px solid black;
-    transition: background-color 0.3s, color 0.3s;
 }
 
 .role-button:first-child {
@@ -38,12 +37,13 @@ h1 {
 }
 
 .role-button.active {
-    background-color: rgb(114, 114, 114);
     color: white;
+    background-color: rgba(51, 51, 51, 1);
 }
 
 .role-button:hover {
-    background-color: rgb(200, 200, 200);
+    color: white;
+    background-color: rgba(51, 51, 51, 1);
 }
 
 .login-form {
@@ -51,7 +51,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 300px;
+    max-width: 320px;
 }
 
 .login-input {
@@ -59,25 +59,26 @@ h1 {
     padding: 10px;
     margin: 10px 0;
     font-size: 1em;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .login-button {
     padding: 10px 20px;
-    font-size: 1em;
+    width: 320px;
+    height: 40px;
+    font-size: 14px;
     margin-top: 20px;
     cursor: pointer;
     background-color: white;
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 17px;
     transition: background-color 0.3s, color 0.3s;
 }
 
 .login-button:hover {
-    background-color: rgb(114, 114, 114);
     color: white;
+    background-color: rgba(51, 51, 51, 1);
 }
 
 .login-message {

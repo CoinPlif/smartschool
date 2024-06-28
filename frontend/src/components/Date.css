@@ -7,17 +7,15 @@
     justify-content: center;
     min-height: 83.5vh;
     padding: 20px;
-    background-color: #f9f9f9;
     text-align: center;
     background-color: white;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     margin-bottom: 20px;
-    color: #333;
+    color: black;
 }
 
 .datepicker-container {
@@ -50,23 +48,26 @@ h1 {
 
 .submit-button {
     padding: 10px 20px;
-    font-size: 1em;
-    cursor: not-allowed;
-    border: none;
-    border-radius: 15px;
-    background-color: grey;
-    color: white;
+    width: 200px;
+    height: 40px;
+    font-size: 14px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 17px;
     transition: background-color 0.3s, color 0.3s;
 }
 
 .submit-button:disabled {
     cursor: not-allowed; /* Указываем, что курсор неактивен */
-    background-color: #ddd; /* Серый цвет кнопки */
-    color: #666; /* Цвет текста кнопки */
+    background-color: white; /* Серый цвет кнопки */
+    color: black; /* Цвет текста кнопки */
 }
 
 .submit-button:hover {
-    background-color: black; /* Цвет кнопки при наведении */
+    color: white;
+    background-color: rgba(51, 51, 51, 1);
 }
 
 /* Новые стили для выделения завершенных и частично завершенных дней */

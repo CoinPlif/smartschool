@@ -1,0 +1,11 @@
+h1{
+    text-align: center;
+    grid-row: 2;
+    color:rgba(51, 51, 51, 1);
+    font-size: 28;
+}
+
+a{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1 fr 2fr 1 fr;
+}

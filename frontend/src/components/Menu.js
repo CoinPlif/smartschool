@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Menu.css';
+import { useNavigate } from 'react-router-dom';
+import './Menu.css'; // Подключите стили
 
 function Menu() {
     const [orders, setOrders] = useState([]);
-    const today = new Date();
+    const navigate = useNavigate();
 
     useEffect(() => {
+        const childId = localStorage.getItem("childId");
         const fetchOrders = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/orders/');
-                const ordersData = response.data.filter(order => order);
-                ordersData.sort((a, b) => new Date(b.order_date) - new Date(a.order_date));
+                const response = await axios.get(`http://localhost:8000/api/orders/?children_id=${childId}`);
+                const ordersData = response.data;
+                ordersData.sort((a, b) => new Date(a.orders_day_dt) - new Date(b.orders_day_dt)); // Сортировка по дате
                 setOrders(ordersData);
             } catch (error) {
                 console.error('Ошибка при загрузке заказов:', error);
@@ -21,17 +23,9 @@ function Menu() {
         fetchOrders();
     }, []);
 
-    const getOrderButtonColor = (orderDate) => {
-        const orderDateObj = new Date(orderDate);
-        const differenceInDays = Math.floor((orderDateObj - today) / (1000 * 60 * 60 * 24));
-
-        if (differenceInDays < 0) {
-            return 'gray'; 
-        } else if (differenceInDays >= 0 && differenceInDays <= 3) {
-            return 'red';
-        } else {
-            return 'green'; 
-        }
+    const handleOrderClick = (orderDate) => {
+        localStorage.setItem("date", orderDate);
+        navigate(`/order`);
     };
 
     return (
@@ -42,9 +36,13 @@ function Menu() {
                     <button
                         key={order.id}
                         className="order-button"
-                        style={{ backgroundColor: getOrderButtonColor(order.order_date) }}
+                        onClick={() => handleOrderClick(order.orders_day_dt)}
                     >
-                        Заказ #{order.id} ({new Date(order.order_date).toLocaleDateString()})
+                        <span className="order-date">{new Date(order.orders_day_dt).toLocaleDateString()}</span>
+                        <span className={`order-status ${order.orders_if_paid ? 'paid' : 'not-paid'}`}>
+                            {order.orders_if_paid ? 'Оплачен' : 'Не оплачен'}
+                        </span>
+                        <span className="order-price">{order.orders_price} руб.</span>
                     </button>
                 ))}
             </div>

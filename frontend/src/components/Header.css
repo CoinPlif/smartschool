@@ -1,14 +1,30 @@
 .header {
+    margin-top:25px;
     display: flex;
+    flex-wrap:wrap;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f0f0f0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+    color:black;
+    font-weight: lighter;
+    margin-right: 29px;
+    }
 
 .logo {
-    height: 50px; /* Adjust height as needed */
+    width:149px;
+    height:83px;
+    margin-left: 29px;;
+}
+
+.header-center {
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.child-info {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
 }
 
 nav ul {
@@ -23,17 +39,29 @@ nav ul li {
     margin-left: 20px;
 }
 
-.nav-button,
+
 .logout-button {
+    align-items: center;
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
     text-decoration: none;
     color: black;
     background-color: white;
+    border-color: white;
+}
+
+.nav-button{
+    margin-top: 25px;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: none;
+    color: black;
+    background-color: white;
+
 }
 
 .nav-button:hover,

@@ -105,11 +105,10 @@ class OrdersInChecksSerializers(serializers.ModelSerializer):
 
 
 class DishesTypeSerializers(serializers.ModelSerializer):
-    dish_types_name = CharField(allow_null=False)
 
     class Meta:
         model = DishTypes
-        fields = ("id", "dish_types_name")
+        fields = "__all__"
 
 
 class DishesSerializers(serializers.ModelSerializer):
@@ -117,7 +116,7 @@ class DishesSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Dishes
-        fields = ("id", "dishes_type", "dishes_name", "dishes_description", "dishes_calories", "dishes_price")
+        fields = ("id", "dishes_type", "dishes_name", "dishes_description", "dishes_calories", "dishes_price", "valid_from_dttm", "valid_to_dttm")
 
 
 class BrDishesSerializers(serializers.ModelSerializer):
@@ -181,7 +180,7 @@ class OrdersSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Orders
-        fields = ("id", 'orders_breakfast_id', 'orders_lunch_id', 'orders_dinner_id', 'orders_price', "children_id", "orders_day_dt", "orders_price")
+        fields = ("id", 'orders_breakfast_id', 'orders_lunch_id', 'orders_dinner_id', 'orders_price', "children_id", "orders_day_dt", "orders_price", "orders_if_paid")
 
 
 class ChecksSerializers(serializers.ModelSerializer):

@@ -2,15 +2,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: flex-start;
     padding: 20px;
     min-height: 80vh;
 }
 
 .meal {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-around
 
 }
 
@@ -20,7 +20,7 @@
     font-size: 16px; 
     background-color: white;
     border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 17px;
     cursor: pointer;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -29,8 +29,8 @@
 }
 
 .meal-button:hover {
-    background-color: rgb(114, 114, 114); 
     color: white;
+    background-color: rgba(51, 51, 51, 1);
 }
 
 .meal-title {
@@ -55,19 +55,20 @@
 }
 
 .submit-button {
+    width: 300px;
     padding: 10px 20px;
     font-size: 16px;
     background-color: white;
     border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 17px;
     cursor: pointer;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: black;
     transition: background-color 0.3s, color 0.3s; 
 }
 
 .submit-button:hover {
-    background-color: rgb(114, 114, 114); 
-    color: white; 
+    
+    color: white;
+    background-color: rgba(51, 51, 51, 1);
 }

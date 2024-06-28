@@ -10,25 +10,23 @@ body {
     justify-content: center;
     min-height: 100vh;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: white;
 }
 
 .dishes-section {
     width: 100%;
     max-width: 600px;
-    margin-bottom: 20px;
 }
 
 .dish {
     border: 1px solid black;
     padding: 10px; 
-    margin: 10px 0;
+    margin: 20px 0;
     background-color: white;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     width: 100%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative;
     text-align: left;
     border-radius: 15px;
     min-height: 80px;
@@ -40,8 +38,8 @@ body {
 }
 
 .dish:hover {
-    background-color: rgb(114, 114, 114);
     color: white;
+    background-color: rgba(51, 51, 51, 1);
 }
 
 .dish.selected {
@@ -86,6 +84,7 @@ body {
 
 .dish .calories {
     font-size: 0.8em;
+    
     color: inherit;
     margin: 0;
 }
@@ -103,12 +102,14 @@ body {
 
 .submit-button {
     padding: 10px 20px;
-    font-size: 1em;
-    cursor: not-allowed;
-    border: none;
-    border-radius: 15px;
-    background-color: grey;
-    color: white;
+    width: 200px;
+    height: 40px;
+    font-size: 14px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 17px;
     transition: background-color 0.3s, color 0.3s;
 }
 

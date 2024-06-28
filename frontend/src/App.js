@@ -12,6 +12,8 @@ import Lunch from './components/Lunch';
 import Dinner from './components/Dinner';
 import Order from './components/Order';
 import Menu from './components/Menu';
+import SetDishes from './components/SetDishes';
+import Save from './components/Save';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function Main() {
     <div className="app">
      {showHeader && <Header />} 
       <Routes>
+        <Route exact path="/save" element={<Save/>} />
+        <Route exact path="/dishes" element={<SetDishes/>} />
         <Route exact path="/main" element={<Mainpage />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/children" element={<Children />} />

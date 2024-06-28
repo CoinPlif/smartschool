@@ -6,7 +6,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from api import serializers
-from food.models import Dishes, Orders, Checks, BrDishes, LunDishes, DinDishes
+from food.models import Dishes, Orders, Checks, BrDishes, LunDishes, DinDishes, DishTypes
 
 
 class DishesViewSet(viewsets.ModelViewSet):
@@ -15,6 +15,10 @@ class DishesViewSet(viewsets.ModelViewSet):
 
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("dishes_type",)
+
+class DishTypesViewSet(viewsets.ModelViewSet):
+    queryset = DishTypes.objects.all()
+    serializer_class = serializers.DishesTypeSerializers
 
 
 class BrDishesViewSet(viewsets.ModelViewSet):
@@ -44,6 +48,9 @@ class DinDishesViewSet(viewsets.ModelViewSet):
 class OrdersViewSet(viewsets.ModelViewSet):
     queryset = Orders.objects.all()
     serializer_class = serializers.OrdersSerializers
+
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ("children_id", )
 
 
 class ChecksViewSet(viewsets.ModelViewSet):

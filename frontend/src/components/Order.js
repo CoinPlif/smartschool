@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Order.css'; // Подключаем стили
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Order() {
     const childId = localStorage.getItem("childId");
@@ -14,6 +14,7 @@ function Order() {
     const [dinner, setDinner] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [redirectTo, setRedirectTo] = useState(null);
+    const [directTo, setDirectTo] = useState(null);
 
     useEffect(() => {
         const fetchDishDetails = async (dishId) => {
@@ -80,6 +81,10 @@ function Order() {
         setRedirectTo(path);
     };
 
+    const handleDirectClick = (path) => {
+        setDirectTo(path);
+    };
+
     useEffect(() => {
         const calculateTotalPrice = () => {
             const breakfastPrice = calculateMealTotalPrice(breakfast);
@@ -118,6 +123,7 @@ function Order() {
         } catch (error) {
             console.error("Error submitting order:", error);
         }
+        handleDirectClick("/save")
     };
 
 
@@ -144,9 +150,13 @@ function Order() {
         );
     };
 
+    if (directTo) {
+        return <Navigate to={directTo} />;
+    };
+
     if (redirectTo) {
         return <Navigate to={redirectTo} />;
-    }
+    };
 
     return (
         <div className="orders-container">
