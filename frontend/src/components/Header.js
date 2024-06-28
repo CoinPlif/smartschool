@@ -38,7 +38,7 @@ const Header = () => {
                     <li><Link to="/date" className="nav-button">Заказать питание</Link></li>
                     <li><Link to="/account" className="nav-button">Аккаунт</Link></li>
                     <li><Link to="/menu" className="nav-button">Заказы</Link></li>
-                    <li><button onClick={handleLogout} className="logout-button">Выход</button></li>
+                    <li><Link to="/login" onClick={handleLogout} className="logout-button">Выход</Link></li>
                 </ul>
             </nav>
         </header>

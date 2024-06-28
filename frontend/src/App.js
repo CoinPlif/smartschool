@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import './App.css';
 import Mainpage from './components/Mainpage';
 import Header from './components/Header';
+import HeadersSW from './components/HeadersSW';
 import Login from './components/Login';
 import Children from './components/Children';
 import Account from './components/Account';
@@ -14,6 +15,7 @@ import Order from './components/Order';
 import Menu from './components/Menu';
 import SetDishes from './components/SetDishes';
 import Save from './components/Save';
+import DishList from './components/DishList';
 
 function App() {
   return (
@@ -25,14 +27,15 @@ function App() {
 
 function Main() {
   const location = useLocation();
+  const role = localStorage.getItem('role'); // Get the user's role from localStorage
   const showHeader = location.pathname !== '/login' && location.pathname !== '/role';
+  const showHeaderSW = role === 'schoolworker';
 
   return (
     <div className="app">
-     {showHeader && <Header />} 
+      {showHeader && (showHeaderSW ? <HeadersSW /> : <Header />)}
       <Routes>
-        <Route exact path="/save" element={<Save/>} />
-        <Route exact path="/dishes" element={<SetDishes/>} />
+        <Route exact path="/save" element={<Save />} />
         <Route exact path="/main" element={<Mainpage />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/children" element={<Children />} />
@@ -44,6 +47,8 @@ function Main() {
         <Route exact path="/order" element={<Order />} />
         <Route exact path="/account" element={<Account />} />
         <Route exact path="/menu" element={<Menu />} />
+        <Route exact path="/dishlist" element={<DishList />} />
+        <Route exact path="/dishes" element={<SetDishes />} />
       </Routes>
     </div>
   );

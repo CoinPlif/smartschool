@@ -1,11 +1,9 @@
-/* Стили для компонента DatePick */
-
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 83.5vh;
+    min-height: 79vh;
     padding: 20px;
     text-align: center;
     background-color: white;
@@ -42,7 +40,6 @@ h1 {
 }
 
 .react-datepicker__input-container input:focus {
-    border-color: #007bff;
     outline: none;
 }
 
@@ -59,10 +56,15 @@ h1 {
     transition: background-color 0.3s, color 0.3s;
 }
 
+.current-date {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
 .submit-button:disabled {
-    cursor: not-allowed; /* Указываем, что курсор неактивен */
-    background-color: white; /* Серый цвет кнопки */
-    color: black; /* Цвет текста кнопки */
+    cursor: not-allowed;
+    background-color: white;
+    color: black; 
 }
 
 .submit-button:hover {
@@ -70,7 +72,6 @@ h1 {
     background-color: rgba(51, 51, 51, 1);
 }
 
-/* Новые стили для выделения завершенных и частично завершенных дней */
 .completed-date {
     background-color: rgb(77, 174, 77) !important;
     color: white !important;
@@ -79,4 +80,13 @@ h1 {
 .partial-date {
     background-color: rgb(225, 225, 46) !important;
     color: black !important;
+}
+
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+  border-radius: 0.3rem;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
 }

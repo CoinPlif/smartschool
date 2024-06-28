@@ -1,0 +1,71 @@
+/* DishList.css */
+
+.dish-list-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dish-list-container h2 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.dish-list-container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dish-list-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dish-list-container li {
+    margin-bottom: 10px;
+}
+
+.dish-button {
+    padding: 10px 20px;
+    width: 200px;
+    height: 60px;
+    font-size: 14px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 17px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dish-button:hover {
+    color: white;
+    background-color: rgba(51, 51, 51, 1);
+}
+
+.add-dish-button {
+    padding: 10px 20px;
+    width: 600px;
+    height: 40px;
+    font-size: 14px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 17px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.add-dish-button:hover {
+    color: white;
+    background-color: rgba(51, 51, 51, 1);
+}

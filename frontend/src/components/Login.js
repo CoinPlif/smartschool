@@ -47,7 +47,7 @@ function Login() {
     if (isLoggedIn) {
         return (
             <div className="register-container">
-                <Navigate to={role === 'parent' ? '/children' : '/dishes'} />
+                <Navigate to={role === 'parent' ? '/children' : '/dishlist'} />
             </div>
         );
     }

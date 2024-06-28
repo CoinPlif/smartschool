@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './Date.css';
+import ru from 'date-fns/locale/ru'; // Импортируем локализацию для русского языка
 
 function DatePick() {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -12,8 +13,8 @@ function DatePick() {
     const [completedOrders, setCompletedOrders] = useState([]);
     const [partialOrders, setPartialOrders] = useState([]);
     const [redirectTo, setRedirectTo] = useState(null);
-    const today = new Date();
     const childId = localStorage.getItem('childId');
+    const today = new Date();
 
     useEffect(() => {
         const fetchBookedDates = async () => {
@@ -71,7 +72,7 @@ function DatePick() {
         const formattedDate = formatDate(selectedDate);
         localStorage.setItem('date', formattedDate);
         setConfirmedDate(selectedDate);
-    
+
         try {
             // Проверяем наличие завершенного заказа в localhost:8000/api/orders/
             const orderResponse = await axios.get(`http://localhost:8000/api/orders/?children_id=${childId}`);
@@ -83,28 +84,27 @@ function DatePick() {
                     orderDate.getFullYear() === selectedDate.getFullYear()
                 );
             });
-    
+
             if (hasCompletedOrder) {
                 setRedirectTo('/order');
-                return;
-            }else{
+            } else {
                 setRedirectTo('/breakfast');
-                return;
             }
-    
-            
+
         } catch (error) {
             console.error('Ошибка при проверке заказов:', error);
         }
     };
-    
-    
 
     const formatDate = (date) => {
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
         return `${year}-${month}-${day}`;
+    };
+
+    const filterSunday = (date) => {
+        return date.getDay() !== 0;
     };
 
     const getDayClassName = (date) => {
@@ -130,6 +130,11 @@ function DatePick() {
             return 'partial-date';
         }
 
+        const isToday = date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+        if (isToday) {
+            return 'current-date';
+        }
+
         return undefined;
     };
 
@@ -150,6 +155,9 @@ function DatePick() {
                     className="datepicker-input"
                     highlightDates={bookedDates}
                     dayClassName={getDayClassName}
+                    locale={ru}
+                    weekStartsOn={1}
+                    filterDate={filterSunday}
                 />
                 <button
                     className="submit-button"

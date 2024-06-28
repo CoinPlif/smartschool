@@ -15,6 +15,7 @@ function Account() {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [role, setRole] = useState(localStorage.getItem("role"));
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,7 +28,6 @@ function Account() {
     useEffect(() => {
         const fetchUserData = async () => {
             const userId = localStorage.getItem("userId");
-            const role = localStorage.getItem("role");
 
             let apiUrl = '';
             if (role === 'parent') {
@@ -55,11 +55,10 @@ function Account() {
         };
 
         fetchUserData();
-    }, []);
+    }, [role]);
 
     const saveData = async () => {
         const userId = localStorage.getItem("userId");
-        const role = localStorage.getItem("role");
 
         let apiUrl = '';
         if (role === 'parent') {
@@ -74,17 +73,17 @@ function Account() {
                     "schoolworkers_login": formData.login,
                     "schoolworkers_password": formData.password
                 });
-            }else{
+            } else {
                 await axios.patch(apiUrl, {
                     "parents_name": formData.name,
                     "parents_login": formData.login,
                     "parents_password": formData.password
                 });
             }
-            
+
             setSuccess('Данные успешно сохранены.');
             setError('');
-            setInitialFormData(formData); 
+            setInitialFormData(formData);
         } catch (error) {
             setError('Ошибка при сохранении данных. Пожалуйста, попробуйте снова.');
             setSuccess('');
@@ -103,15 +102,19 @@ function Account() {
                 {error && <p className="error-message">{error}</p>}
                 {success && <p className="success-message">{success}</p>}
 
-                <h4>Имя</h4>
-                <input 
-                    className="account" 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    value={formData.name} 
-                    onChange={handleChange} 
-                />
+                {role !== 'schoolworker' && (
+                    <>
+                        <h4>Имя</h4>
+                        <input 
+                            className="account" 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            value={formData.name} 
+                            onChange={handleChange} 
+                        />
+                    </>
+                )}
 
                 <h4>Логин</h4>
                 <input 

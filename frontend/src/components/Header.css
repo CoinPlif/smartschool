@@ -6,7 +6,7 @@
     color:black;
     font-weight: lighter;
     margin-right: 29px;
-    }
+}
 
 .logo {
     width:149px;
@@ -29,7 +29,7 @@
 
 nav ul {
     list-style-type: none;
-    margin: 0;
+    margin-top: 10px;
     padding: 0;
     display: flex;
     align-items: center;
