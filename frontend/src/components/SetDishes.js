@@ -94,7 +94,6 @@ function SetDishes() {
             if (selectedDishId) {
                 const response = await axios.patch(`http://localhost:8000/api/dishes/${selectedDishId}/`, updatedDish);
                 console.log('Блюдо успешно обновлено:', response.data);
-                
             } else {
                 const response = await axios.post('http://localhost:8000/api/dishes/', updatedDish);
                 console.log('Блюдо успешно создано:', response.data);
@@ -111,6 +110,18 @@ function SetDishes() {
             navigate("/dishlist");
         } catch (error) {
             console.error('Ошибка при сохранении блюда:', error);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (selectedDishId) {
+            try {
+                await axios.delete(`http://localhost:8000/api/dishes/${selectedDishId}/`);
+                console.log('Блюдо успешно удалено');
+                navigate("/dishlist");
+            } catch (error) {
+                console.error('Ошибка при удалении блюда:', error);
+            }
         }
     };
 
@@ -226,9 +237,14 @@ function SetDishes() {
                 {errors.validTo && <span className="error-text">Выберите дату и время окончания доступности</span>}
             </div>
 
-            <button type="button" onClick={handleSubmit} className="submit-button">
-                {selectedDishId ? 'Сохранить изменения' : 'Создать блюдо'}
-            </button>
+            <div className="button-container">
+                <button type="button" className="delete-button" onClick={handleDelete}>
+                    Удалить
+                </button>
+                <button type="button" className="save-button" onClick={handleSubmit}>
+                    {selectedDishId ? 'Сохранить изменения' : 'Создать блюдо'}
+                </button>
+            </div>
         </div>
     );
 }

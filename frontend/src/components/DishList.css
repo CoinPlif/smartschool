@@ -1,7 +1,7 @@
 /* DishList.css */
 
 .dish-list-container {
-    max-width: 600px;
+    max-width: 635px;
     margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -36,8 +36,10 @@
 
 .dish-button {
     padding: 10px 20px;
+    margin-right: 5px;
+    margin-left: 5px;
     width: 200px;
-    height: 60px;
+    height: 40px;
     font-size: 14px;
     margin-top: 20px;
     cursor: pointer;

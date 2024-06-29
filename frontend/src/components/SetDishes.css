@@ -71,19 +71,43 @@
     border-color: red;
 }
 
-button[type="submit"] {
-    background-color: grey;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1em;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    width: 100%;
+.button-container {
+    display: flex;
+    justify-content: space-between;
 }
 
-button[type="submit"]:hover {
+.delete-button {
+    padding: 10px 20px;
+    width: 250px;
+    height: 40px;
+    font-size: 14px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid rgb(255, 0, 0);
+    border-radius: 17px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.delete-button:hover {
+    color: white;
+    background-color: rgb(110, 9, 9);
+}
+
+.save-button {
+    padding: 10px 20px;
+    width: 250px;
+    height: 40px;
+    font-size: 14px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 17px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.save-button:hover {
     color: white;
     background-color: rgba(51, 51, 51, 1);
 }

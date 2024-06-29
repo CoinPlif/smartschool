@@ -28,7 +28,7 @@ function App() {
 function Main() {
   const location = useLocation();
   const role = localStorage.getItem('role'); // Get the user's role from localStorage
-  const showHeader = location.pathname !== '/login' && location.pathname !== '/role';
+  const showHeader = location.pathname !== '/' && location.pathname !== '/role';
   const showHeaderSW = role === 'schoolworker';
 
   return (
@@ -37,7 +37,7 @@ function Main() {
       <Routes>
         <Route exact path="/save" element={<Save />} />
         <Route exact path="/main" element={<Mainpage />} />
-        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/" element={<Login />} />
         <Route exact path="/children" element={<Children />} />
         <Route exact path="/role" element={<Role />} />
         <Route exact path="/date" element={<DatePick />} />
