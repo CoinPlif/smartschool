@@ -1,9 +1,10 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date
-
+from django.contrib.postgres.fields import ArrayField
 from .constants import LENGTH_NAME, LENGTH_DESCRIPTION, MIN_NUMBER, MAX_PRICE, MAX_CALORIES, MAX_MARK
 from users.models import (Parents, Children)
+import json
 
 
 class DishTypes(models.Model):
@@ -237,37 +238,24 @@ class Orders(models.Model):
 
 
 class Checks(models.Model):
-    orders_list = models.ManyToManyField(Orders,
-                                         through="OrdersInChecks",
-                                         verbose_name="Список заказов")
-
-    checks_created_dttm = models.DateTimeField(null=False,
-                                               auto_now_add=True,
-                                               verbose_name="Дата создания чека (datatime)")
-
-    checks_price = models.FloatField(validators=[
-                                    MinValueValidator(MIN_NUMBER)
-                                    ],
-                                    null=False,
-                                    default=0,
-                                    verbose_name="Стоимость чека (вычислимое поля)")
+    orders_list_str = models.TextField(verbose_name="Список заказов в виде строки")
+    checks_created_dttm = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания чека (datetime)")
+    checks_price = models.FloatField(validators=[MinValueValidator(0)], default=0, verbose_name="Стоимость чека (вычислимое поле)")
+    checks_children = models.IntegerField(verbose_name="ID ребенка")
 
     class Meta:
         verbose_name = "Checks"
 
     def __str__(self):
-        return f"{self.orders_list}"
+        return f"{self.orders_list_str}"
 
+    @property
+    def orders_list(self):
+        return json.loads(self.orders_list_str)
 
-class OrdersInChecks(models.Model):
-    orders_id = models.ForeignKey(Orders,
-                                  on_delete=models.CASCADE)
-
-    checks_id = models.ForeignKey(Checks,
-                                  on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.orders_id} {self.checks_id}"
+    @orders_list.setter
+    def orders_list(self, value):
+        self.orders_list_str = json.dumps(value)
 
 
 class Reviews(models.Model):

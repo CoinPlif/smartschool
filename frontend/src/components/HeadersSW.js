@@ -18,7 +18,6 @@ const HeaderSW = () => {
                 <ul>
                     <li><Link to="/dishlist" className="nav-button">Блюда</Link></li>
                     <li><Link to="/account" className="nav-button">Аккаунт</Link></li>
-                    <li><Link to="/statistics" className="nav-button">Статистика</Link></li>
                     <li><Link to="/" onClick={handleLogout} className="logout-button">Выход</Link></li>
                 </ul>
             </nav>

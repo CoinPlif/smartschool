@@ -238,9 +238,11 @@ function SetDishes() {
             </div>
 
             <div className="button-container">
-                <button type="button" className="delete-button" onClick={handleDelete}>
-                    Удалить
-                </button>
+                {selectedDishId && (
+                    <button type="button" className="delete-button" onClick={handleDelete}>
+                        Удалить
+                    </button>
+                )}
                 <button type="button" className="save-button" onClick={handleSubmit}>
                     {selectedDishId ? 'Сохранить изменения' : 'Создать блюдо'}
                 </button>

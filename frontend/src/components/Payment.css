@@ -1,0 +1,48 @@
+/* Order.css */
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-button {
+    width: 100%;
+    max-width: 600px;
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    text-align: left;
+}
+
+.order-button.selected {
+    background-color: #d1e7dd;
+    border-color: #0f5132;
+}
+
+.order-submit {
+    margin-top: 20px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: rgba(51, 51, 51, 1);
+}
+
+.submit-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}

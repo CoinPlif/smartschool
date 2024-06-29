@@ -16,6 +16,8 @@ import Menu from './components/Menu';
 import SetDishes from './components/SetDishes';
 import Save from './components/Save';
 import DishList from './components/DishList';
+import Payment from './components/Payment';
+import Paid from './components/Paid';
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function Main() {
     <div className="app">
       {showHeader && (showHeaderSW ? <HeadersSW /> : <Header />)}
       <Routes>
+        <Route exact path="/paid" element={<Paid />} />
+        <Route exact path="/payment" element={<Payment />} />
         <Route exact path="/save" element={<Save />} />
         <Route exact path="/main" element={<Mainpage />} />
         <Route exact path="/" element={<Login />} />

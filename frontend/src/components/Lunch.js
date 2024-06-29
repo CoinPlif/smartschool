@@ -98,7 +98,7 @@ function Lunch() {
                     <p className="price">{dish.dishes_price} руб.</p>
                 </div>
                 <div className="dish-info">
-                    <p className="description">{dish.dishes_description}</p>
+                    <p className="description">Состав: {dish.dishes_description}</p>
                     <p className="calories">Калорий: {dish.dishes_calories}</p>
                 </div>
             </div>

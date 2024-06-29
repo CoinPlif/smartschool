@@ -2,8 +2,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from rest_framework import serializers
 from rest_framework.fields import IntegerField, CharField, DateTimeField, SerializerMethodField
 from rest_framework.relations import PrimaryKeyRelatedField
-
-from food.models import Orders, Dishes, BrDishes, LunDishes, DinDishes, DishTypes, OrdersInChecks, Checks
+import json
+from food.models import Orders, Dishes, BrDishes, LunDishes, DinDishes, DishTypes, Checks
 
 
 class BrDrinkRelatedField(serializers.PrimaryKeyRelatedField):
@@ -95,17 +95,8 @@ class AdditionalRelatedField(serializers.PrimaryKeyRelatedField):
         return queryset.filter(dishes_type__dishes_types_name="Дополнительное")
 
 
-class OrdersInChecksSerializers(serializers.ModelSerializer):
-    checks_id = IntegerField(allow_null=False)
-    orders_id = IntegerField(allow_null=False)
-
-    class Meta:
-        model = OrdersInChecks
-        fields = "__all__"
-
 
 class DishesTypeSerializers(serializers.ModelSerializer):
-
     class Meta:
         model = DishTypes
         fields = "__all__"
@@ -184,11 +175,13 @@ class OrdersSerializers(serializers.ModelSerializer):
 
 
 class ChecksSerializers(serializers.ModelSerializer):
-    orders_list = OrdersSerializers(many=True)
-    checks_price = SerializerMethodField()
+    orders_list = serializers.ListField(child=serializers.IntegerField(), write_only=True)
 
     class Meta:
         model = Checks
-        fields = ("id", "orders_list", "checks_created_dttm", "checks_price")
+        fields = ['orders_list', 'checks_price', 'checks_children', 'orders_list_str']
 
-
+    def create(self, validated_data):
+        orders_list = validated_data.pop('orders_list')
+        validated_data['orders_list_str'] = json.dumps(orders_list)
+        return super().create(validated_data)
